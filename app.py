@@ -18,6 +18,18 @@ def get_all_notes():
     conn.close()
     return jsonify([dict(note) for note in notes])
 
+
+@app.route('/notes/search', methods=['GET'])
+def search_notes():
+    query = request.args.get('query')
+    if not query:
+        return jsonify({'error': 'Query parameter is required'}), 400
+    conn = get_db_connection()
+    notes = conn.execute('SELECT * FROM notes WHERE title LIKE ? OR content LIKE ?', (f'%{query}%', f'%{query}%')).fetchall()
+    conn.close()
+    return jsonify([dict(note) for note in notes])
+
+
 @app.route('/notes/<int:id>', methods=['GET'])
 def get_note(id):
     conn = get_db_connection()
