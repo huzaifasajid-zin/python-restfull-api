@@ -27,6 +27,7 @@ def get_note(id):
         return jsonify({'error': 'Note not found'}), 404
     return jsonify(dict(note))
 
+
 @app.route('/notes/add', methods=['POST'])
 def create_note():
     data = request.get_json()
