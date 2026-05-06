@@ -29,14 +29,6 @@ def search_notes():
     conn.close()
     return jsonify([dict(note) for note in notes])
 
-@app.route('/notes/count', methods=['GET'])
-def count_notes():
-    conn = get_db_connection()
-    count = conn.execute('SELECT COUNT(*) FROM notes').fetchone()[0]
-    conn.close()
-    return jsonify({'count': count})
-
-
 
 @app.route('/notes/<int:id>', methods=['GET'])
 def get_note(id):
